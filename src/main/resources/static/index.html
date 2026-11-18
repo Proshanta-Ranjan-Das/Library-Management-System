@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Library Management System</title>
+
+  <!-- Standard professional font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+  >
+
+  <style>
+
+    /* =========================================================
+       FOREST THEME COLORS
+    ========================================================= */
+
+    :root {
+      --forest-dark: #163a2b;
+      --forest-deep: #1b4332;
+      --forest: #2d6a8f;
+      --forest-medium: #40916c;
+      --forest-light: #74c69d;
+      --forest-pale: #d8f3dc;
+
+      --page-bg: #edf5ef;
+      --white: #ffffff;
+
+      --text-dark: #26352d;
+      --text-muted: #66736c;
+
+      --border: #cddbd2;
+
+      --danger: #b42318;
+      --warning: #a15c00;
+      --blue: #2563eb;
+      --gray: #64748b;
+
+      --shadow: 0 2px 8px rgba(22, 58, 43, 0.12);
+    }
+
+
+    /* =========================================================
+       BASIC RESET
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+
+      color: var(--text-dark);
+
+      /* Forest-themed complete page background */
+      background:
+              linear-gradient(
+                      135deg,
+                      #e5f1e8 0%,
+                      #edf5ef 45%,
+                      #e2efe6 100%
+              );
+
+      background-attachment: fixed;
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      padding: 15px 30px;
+
+      background: var(--forest-dark);
+      color: white;
+
+      border-bottom: 3px solid var(--forest-light);
+
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    }
+
+
+    /* Library title */
+
+    header h1 {
+      margin: 0;
+
+      font-size: 21px;
+      font-weight: 600;
+
+      letter-spacing: 0.2px;
+    }
+
+    header h1 small {
+      display: block;
+
+      margin-top: 2px;
+
+      color: #cfe8d7;
+
+      font-size: 11px;
+      font-weight: 400;
+
+      letter-spacing: 0.8px;
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    nav {
+      display: flex;
+      gap: 6px;
+
+      margin-left: auto;
+    }
+
+    nav button {
+      padding: 8px 16px;
+
+      background: transparent;
+
+      color: white;
+
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+
+      transition: 0.2s ease;
+    }
+
+    nav button:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    nav button.on {
+      background: white;
+
+      color: var(--forest-dark);
+
+      border-color: white;
+    }
+
+
+    /* =========================================================
+       MAIN AREA
+    ========================================================= */
+
+    main {
+      width: 100%;
+      max-width: 1120px;
+
+      margin: 28px auto;
+
+      padding: 0 20px;
+
+      /* Makes sure no white area appears around content */
+      background: transparent;
+    }
+
+
+    /* =========================================================
+       CARDS
+    ========================================================= */
+
+    .card {
+      margin-bottom: 20px;
+
+      padding: 20px;
+
+      background: var(--white);
+
+      border: 1px solid var(--border);
+      border-radius: 5px;
+
+      box-shadow: var(--shadow);
+    }
+
+
+    /* =========================================================
+       HEADINGS
+    ========================================================= */
+
+    h2 {
+      margin: 0 0 16px;
+
+      padding-bottom: 10px;
+
+      color: var(--forest-dark);
+
+      border-bottom: 1px solid var(--border);
+
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+
+    /* =========================================================
+       FORMS
+    ========================================================= */
+
+    form {
+      display: flex;
+
+      gap: 12px;
+
+      flex-wrap: wrap;
+
+      align-items: flex-end;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+
+      gap: 5px;
+
+      color: var(--text-muted);
+
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      min-width: 150px;
+
+      padding: 9px 11px;
+
+      background: white;
+
+      color: var(--text-dark);
+
+      border: 1px solid #c6d3ca;
+      border-radius: 4px;
+
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+
+      border-color: var(--forest);
+
+      box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.12);
+    }
+
+
+    /* =========================================================
+       MAIN BUTTON
+    ========================================================= */
+
+    button.btn {
+      padding: 9px 18px;
+
+      background: var(--forest);
+
+      color: white;
+
+      border: 1px solid var(--forest);
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+
+      transition: 0.2s ease;
+    }
+
+    button.btn:hover {
+      background: var(--forest-dark);
+
+      border-color: var(--forest-dark);
+    }
+
+
+    /* =========================================================
+       SMALL BUTTONS
+    ========================================================= */
+
+    button.sm {
+      padding: 5px 10px;
+
+      margin-right: 4px;
+
+      border-radius: 3px;
+
+      font-size: 12px;
+
+      box-shadow: none;
+    }
+
+
+    /* Delete */
+
+    button.red {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
+    button.red:hover {
+      background: #8f1d13;
+    }
+
+
+    /* Green */
+
+    button.grn {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    button.grn:hover {
+      background: var(--forest-dark);
+    }
+
+
+    /* Gray */
+
+    button.gry {
+      background: var(--gray);
+      border-color: var(--gray);
+    }
+
+    button.gry:hover {
+      background: #475569;
+    }
+
+
+    /* =========================================================
+       TABLE
+    ========================================================= */
+
+    .tbl {
+      width: 100%;
+
+      overflow-x: auto;
+
+      margin-top: 6px;
+    }
+
+    table {
+      width: 100%;
+
+      border-collapse: collapse;
+
+      background: white;
+    }
+
+
+    /* Table header */
+
+    th {
+      padding: 11px 12px;
+
+      text-align: left;
+
+      background: var(--forest-deep);
+
+      color: white;
+
+      border: 1px solid var(--forest-deep);
+
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+
+    /* Table cells */
+
+    td {
+      padding: 11px 12px;
+
+      text-align: left;
+
+      background: white;
+
+      color: var(--text-dark);
+
+      border-bottom: 1px solid var(--border);
+
+      font-size: 14px;
+    }
+
+
+    /* Table hover */
+
+    tbody tr:hover td,tr:hover>td{
+      background:#fef9c3}   /* light green */
+
+
+    /* =========================================================
+       STATUS TAGS
+    ========================================================= */
+
+    .tag {
+      display: inline-block;
+
+      padding: 3px 9px;
+
+      border-radius: 3px;
+
+      color: white;
+
+      background: var(--gray);
+
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .tag.BORROWED {
+      background: var(--blue);
+    }
+
+    .tag.RETURNED {
+      background: var(--forest);
+    }
+
+    .tag.late {
+      background: var(--danger);
+    }
+
+    .tag.off {
+      background: var(--warning);
+    }
+
+
+    /* =========================================================
+       TOAST MESSAGE
+    ========================================================= */
+
+    #toast {
+      position: fixed;
+
+      right: 20px;
+      bottom: 20px;
+
+      display: none;
+
+      max-width: 380px;
+
+      padding: 11px 18px;
+
+      background: var(--forest-dark);
+
+      color: white;
+
+      border-radius: 4px;
+
+      font-size: 14px;
+      font-weight: 500;
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+      width: 100%;
+
+      padding: 12px 20px 25px;
+
+      text-align: center;
+
+      background: transparent;
+
+      color: var(--text-muted);
+
+      font-size: 12px;
+    }
+
+
+    /* =========================================================
+       MOBILE RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 640px) {
+
+      header {
+        padding: 13px 16px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+      header h1 {
+        font-size: 19px;
+      }
+
+      nav {
+        width: 100%;
+
+        margin-left: 0;
+      }
+
+      nav button {
+        flex: 1;
+
+        padding: 8px 10px;
+      }
+
+      main {
+        margin-top: 18px;
+
+        padding: 0 12px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      form {
+        flex-direction: column;
+
+        align-items: stretch;
+      }
+
+      input,
+      select {
+        width: 100%;
+
+        min-width: 100%;
+      }
+
+      button.btn {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header>
+
+  <h1>
+    📚 Library Management System
+    <small>Books · Members · Borrowings</small>
+  </h1>
+
+  <nav>
+    <button data-tab="books">📖 Books</button>
+    <button data-tab="members">👥 Members</button>
+    <button data-tab="borrowings">🔄 Borrowings</button>
+  </nav>
+
+</header>
+
+
+<!-- =======================================================
+     APPLICATION CONTENT
+======================================================== -->
+
+<main id="view"></main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<footer>
+  Library Management System · Spring Boot
+</footer>
+
+
+<!-- Toast -->
+
+<div id="toast"></div>
+
+
+<!-- JavaScript -->
+
+<script src="app.js"></script>
+
+</body>
+</html>
+```

@@ -1,0 +1,54 @@
+### IntelliJ HTTP Client - open this file and click the green arrow next to a request.
+### Start the app first (port 8080). Seed data: books 1-4, members 1-2.
+
+### List books (search + paging)
+GET http://localhost:8080/api/books?q=clean&page=0&size=10
+
+### Create a book
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "isbn": "9780596007126",
+  "title": "Head First Design Patterns",
+  "author": "Eric Freeman",
+  "category": "Software Design",
+  "totalCopies": 2
+}
+
+### Create a member
+POST http://localhost:8080/api/members
+Content-Type: application/json
+
+{
+  "name": "Nasrin Sultana",
+  "email": "nasrin@example.com",
+  "phone": "01900000003"
+}
+
+### Borrow book 1 as member 1
+POST http://localhost:8080/api/borrowings
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "memberId": 1
+}
+
+### Return borrow record 1 (fine is calculated if late)
+POST http://localhost:8080/api/borrowings/1/return
+
+### Pay the fine of record 1
+POST http://localhost:8080/api/borrowings/1/pay-fine
+
+### All currently borrowed books
+GET http://localhost:8080/api/borrowings?status=BORROWED
+
+### Overdue books
+GET http://localhost:8080/api/borrowings/overdue
+
+### Member's borrowing history
+GET http://localhost:8080/api/borrowings/member/1
+
+### Member's unpaid fines
+GET http://localhost:8080/api/borrowings/member/1/fines
